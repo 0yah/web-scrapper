@@ -1,7 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys #Needed to emulate Key strokes
 import time
+
+import configparser
+config = configparser.ConfigParser()
+config.read('auth.ini')
+
 driver = webdriver.Chrome('./chromedriver')
+
+username = config['AUTH']['username']
+password = config['AUTH']['password']
 #Open a link
 driver.get("https://instagram.com")
 
@@ -18,11 +26,13 @@ driver.get("https://instagram.com")
 time.sleep(20)
 username_input = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[1]/div/label/input')
 username_input.clear()
-username_input.send_keys("YOUR ACCOUNT USERNAME")
+#username_input.send_keys("YOUR ACCOUNT USERNAME")
+username_input.send_keys(username)
 
 password_input = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[2]/div/label/input')
 password_input.clear()
-password_input.send_keys("YOUR ACCOUNT PASSWORD")
+#password_input.send_keys("YOUR ACCOUNT PASSWORD")
+password_input.send_keys(password)
 
 time.sleep(5)
 login_button = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[3]')
